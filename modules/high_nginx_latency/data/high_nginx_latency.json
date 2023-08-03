@@ -1,0 +1,278 @@
+{
+  "name": "high_nginx_latency",
+  "description": "High Nginx latency typically refers to a situation where the response time of Nginx servers is significantly slower than expected. This may occur due to a variety of reasons, such as increased traffic or a misconfiguration in the server settings. High Nginx latency can cause website downtime, slow page load times, and poor user experience. It is important to address this incident type promptly to prevent any negative impact on users or business operations.",
+  "params": [
+    {
+      "name": "PATH_TO_NGINX_CONFIG_FILE",
+      "value": ""
+    },
+    {
+      "name": "UPSTREAM_SERVER_URL",
+      "value": ""
+    },
+    {
+      "name": "SERVER_IP",
+      "value": ""
+    },
+    {
+      "name": "UPSTREAM_CONFIG_KEY",
+      "value": ""
+    },
+    {
+      "name": "NGINX_CONFIG_FILE",
+      "value": ""
+    },
+    {
+      "name": "PORT",
+      "value": ""
+    },
+    {
+      "name": "HOST_NAME",
+      "value": ""
+    },
+    {
+      "name": "K8S_CLUSTER_NAME",
+      "value": ""
+    },
+    {
+      "name": "NAMESPACE",
+      "value": ""
+    }
+  ],
+  "cells": [
+    {
+      "name": "cell_1",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## High Nginx Latency\nHigh Nginx latency typically refers to a situation where the response time of Nginx servers is significantly slower than expected. This may occur due to a variety of reasons, such as increased traffic or a misconfiguration in the server settings. High Nginx latency can cause website downtime, slow page load times, and poor user experience. It is important to address this incident type promptly to prevent any negative impact on users or business operations."
+    },
+    {
+      "name": "cell_2",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Step 1: Check CPU usage"
+    },
+    {
+      "name": "cell_3",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `top`"
+    },
+    {
+      "name": "cell_4",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Step 2: Check memory usage"
+    },
+    {
+      "name": "cell_5",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `free -m`"
+    },
+    {
+      "name": "cell_6",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Step 3: Check disk space usage"
+    },
+    {
+      "name": "cell_7",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `df -h`"
+    },
+    {
+      "name": "cell_8",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Step 4: Check network traffic"
+    },
+    {
+      "name": "cell_9",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `iftop`"
+    },
+    {
+      "name": "cell_10",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Step 5: Check Nginx status"
+    },
+    {
+      "name": "cell_11",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `systemctl status nginx`"
+    },
+    {
+      "name": "cell_12",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Step 6: Check Nginx error logs"
+    },
+    {
+      "name": "cell_13",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `tail -f /var/log/nginx/error.log`"
+    },
+    {
+      "name": "cell_14",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Step 7: Check Nginx access logs"
+    },
+    {
+      "name": "cell_15",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `tail -f /var/log/nginx/access.log`"
+    },
+    {
+      "name": "cell_16",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Step 8: Check Nginx configuration file for errors"
+    },
+    {
+      "name": "cell_17",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `nginx -t`"
+    },
+    {
+      "name": "cell_18",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Step 9: Check server load"
+    },
+    {
+      "name": "cell_19",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `uptime`"
+    },
+    {
+      "name": "cell_20",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Step 10: Check for any processes consuming high CPU usage"
+    },
+    {
+      "name": "cell_21",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `ps aux --sort=-%cpu | head`"
+    },
+    {
+      "name": "cell_22",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Step 11: Check for any network connectivity issues"
+    },
+    {
+      "name": "cell_23",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `ping ${SERVER_IP}`"
+    },
+    {
+      "name": "cell_24",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Step 12: Check for port connectivity"
+    },
+    {
+      "name": "cell_25",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `telnet ${SERVER_IP} ${PORT}`"
+    },
+    {
+      "name": "cell_26",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Step 13: Check for the response time of the server"
+    },
+    {
+      "name": "cell_27",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `curl -o /dev/null -s -w \"Server response time: %{time_total}\\n\" http://${SERVER_IP}`"
+    },
+    {
+      "name": "cell_28",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Step 14: Check for the response time of Nginx"
+    },
+    {
+      "name": "cell_29",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `curl -o /dev/null -s -w \"Nginx response time: %{time_total}\\n\" http://${SERVER_IP}:${PORT}`"
+    },
+    {
+      "name": "cell_30",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Check if Nginx configuration file exists"
+    },
+    {
+      "name": "cell_31",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "host | host_name=$HOST_NAME | invoke_nginx_config_check($NGINX_CONFIG_FILE)"
+    },
+    {
+      "name": "cell_32",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Test Nginx configuration file"
+    },
+    {
+      "name": "cell_33",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "(host | host_name=$HOST_NAME) union (pod | k8s_cluster_name=$K8S_CLUSTER_NAME | namespace=$NAMESPACE) | `nginx -t -c ${NGINX_CONFIG_FILE}`"
+    },
+    {
+      "name": "cell_34",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Check if Nginx configuration file test is successful"
+    },
+    {
+      "name": "cell_35",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "host | host_name=$HOST_NAME | invoke_nginx_config_test()"
+    },
+    {
+      "name": "cell_36",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Check the Nginx configuration file and ensure that all the directives are properly configured."
+    },
+    {
+      "name": "cell_37",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "host | host_name=$HOST_NAME | invoke_nginx_config_checker($PATH_TO_NGINX_CONFIG_FILE)"
+    },
+    {
+      "name": "cell_38",
+      "type": "MARKDOWN",
+      "enabled": true,
+      "content": "## Check the upstream server's status and ensure that it is properly configured."
+    },
+    {
+      "name": "cell_39",
+      "type": "OP_LANG",
+      "enabled": true,
+      "content": "host | host_name=$HOST_NAME | invoke_check_upstream_server($UPSTREAM_SERVER_URL, $UPSTREAM_CONFIG_KEY)"
+    }
+  ]
+}
